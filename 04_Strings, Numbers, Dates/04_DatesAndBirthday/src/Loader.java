@@ -8,15 +8,12 @@ public class Loader {
 
         LocalDate birthday = LocalDate.of(1998, Month.JANUARY, 18);
         LocalDate relevantBirthday = birthday;
-
+        LocalDate now = LocalDate.now();
         Period period = Period.between(birthday, LocalDate.now());
 
-        System.out.println(0 + " " + birthday.format(DateTimeFormatter.ofPattern("dd.MM.yyyy - EEEE")));
-
-        for (int i = 0; i < period.getYears(); i++) {
-
+        for (int i = 0; relevantBirthday.isBefore(now); i++) {
+            System.out.println(i + " " + relevantBirthday.format(DateTimeFormatter.ofPattern("dd.MM.yyyy - EEEE")));
             relevantBirthday = relevantBirthday.plusYears(1);
-            System.out.println(i + 1 + " " + relevantBirthday.format(DateTimeFormatter.ofPattern("dd.MM.yyyy - EEEE")));
         }
 
         System.out.println("Сейчас мне вот столько годиков: " + period.getYears());
