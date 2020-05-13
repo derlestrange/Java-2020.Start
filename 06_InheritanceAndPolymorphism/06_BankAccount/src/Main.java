@@ -1,3 +1,5 @@
+import Accounts.*;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -24,6 +26,9 @@ public class Main {
         System.out.println("Карточный счет\n");
         CardAccount cardAccount = new CardAccount(0);
         cardAccount.putMoney(100);
-        cardAccount.takeMoney(50);
+        cardAccount.takeMoney(10);
+        cardAccount.takeMoney(10);
+        cardAccount.takeMoney(10);
+        cardAccount.takeMoney(10);
     }
 }

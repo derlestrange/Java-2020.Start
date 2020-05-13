@@ -10,6 +10,10 @@ public class CardAccount extends Account {
     public void takeMoney(double money) {
         commission = (money * commission) / 100;
         System.out.println("Коммиссия: " + commission);
+        if (getBankAccount() > commission){
+            System.out.println("Недостаточно средств для списания!");
+            return;
+        }
         super.takeMoney(money);
         System.out.println("Баланс: " + (getBankAccount() - commission));
     }
