@@ -1,21 +1,26 @@
 package BankClients;
 
+import java.time.LocalDate;
+
 //индивидуальный предприниматель
 public class SoleTrader extends Client {
+
+    private static final LocalDate createTime = LocalDate.now();
 
     public SoleTrader(double bankAccount) {
         super(bankAccount);
     }
 
     @Override
+    public void info() {
+        System.out.println("Индивидуальный предприниматель");
+        System.out.println("Баланс ИИ: " + getBankAccount());
+        System.out.println("Дата создания аккаунта: " + createTime + "\n");
+    }
+
+    @Override
     public void putMoney(double money) {
         double commission;
-        if (money < 0) {
-            System.out.println("Некорректный ввод");
-            System.out.println("Баланс: " + getBankAccount() + "\n");
-            return;
-        }
-
         if (money < 1000) {
             commission = money / 100;
             System.out.println("Вы положили: " + money + "\nКоммисия: " + commission);
@@ -32,18 +37,4 @@ public class SoleTrader extends Client {
             System.out.println(getBankAccount() + "\n");
         }
     }
-
-    @Override
-    public void takeMoney(double money) {
-        if (money < 0 || getBankAccount() < money || (money < 0 && getBankAccount() < money)) {
-            System.out.println("Некорректный ввод");
-            System.out.println("Баланс: " + getBankAccount() + "\n");
-            return;
-        }
-        System.out.println("Вы сняли: " + money);
-        setBankAccount(getBankAccount() - money);
-        System.out.println("Баланс: " + getBankAccount() + "\n");
-    }
-
-
 }
