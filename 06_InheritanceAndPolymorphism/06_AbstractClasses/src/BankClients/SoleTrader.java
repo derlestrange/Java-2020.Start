@@ -17,19 +17,19 @@ public class SoleTrader extends Client {
         }
 
         if (money < 1000) {
-            commission = (1 * money) / 100;
+            commission = money / 100;
             System.out.println("Вы положили: " + money + "\nКоммисия: " + commission);
-            setBankAccount(getBankAccount() + money);
+            setBankAccount(getBankAccount() + (money - commission));
             System.out.print("Баланс: ");
-            System.out.println(getBankAccount() - commission + "\n");
+            System.out.println(getBankAccount() + "\n");
         }
 
         if (money >= 1000) {
             commission = (0.5 * money) / 100;
             System.out.println("Вы положили: " + money + "\nКоммисия: " + commission);
-            setBankAccount(getBankAccount() + money);
+            setBankAccount(getBankAccount() + (money - commission));
             System.out.print("Баланс: ");
-            System.out.println(getBankAccount() - commission + "\n");
+            System.out.println(getBankAccount() + "\n");
         }
     }
 

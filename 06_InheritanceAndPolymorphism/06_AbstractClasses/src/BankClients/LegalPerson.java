@@ -21,17 +21,15 @@ public class LegalPerson extends Client {
 
     @Override
     public void takeMoney(double money) {
-        double commission = (money * 1) / 100;
+        double commission = money / 100;
         if (money < 0 || getBankAccount() < money || (money < 0 && getBankAccount() < money)) {
             System.out.println("Некорректный ввод");
             System.out.println("Баланс: " + getBankAccount() + "\n");
             return;
         }
-        //super.takeMoney(money - commission);
-        System.out.println("Вы сняли: " + (money-commission));
+        System.out.println("Вы сняли: " + money);
         System.out.println("Комиссия: " + commission);
-        setBankAccount(getBankAccount() - money);
-        System.out.println("Баланс: " + (getBankAccount()) + "\n");
+        setBankAccount(getBankAccount() - (commission + money));
     }
 
 }
