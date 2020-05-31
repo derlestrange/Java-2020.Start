@@ -4,7 +4,7 @@ public class Main {
     public static void main(String[] args) {
 
         //физическое лицо
-        NaturalPerson naturalPerson = new NaturalPerson(0);
+        NaturalPerson naturalPerson = new NaturalPerson(100);
         naturalPerson.info();
         naturalPerson.putMoney(100);
         naturalPerson.takeMoney(10);
