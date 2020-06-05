@@ -21,8 +21,6 @@ public class Main {
                 .filter(e -> e.getWorkStart().getYear() == 2017)
                 .max(Comparator.comparing(Employee::getSalary))
                 .ifPresent(System.out::println);
-
-
     }
 
     private static ArrayList<Employee> loadStaffFromFile() {
