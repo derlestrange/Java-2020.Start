@@ -2,6 +2,8 @@ package tasks;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Есть грузовик Truck, у которого задана максимальная грузоподьемность.
@@ -11,7 +13,7 @@ import java.util.Map;
  *  - SmallBoxTruck - до 12 тонн
  *  - SemiTrailer   - до 20 тонн
  */
-public class Task4_Exam extends PleaseDeleteMeAndImplement{
+public class Task4_Exam extends tasks.PleaseDeleteMeAndImplement {
 
     /**
      * Возвращает тип грузовика с наименьшей грузоподьемностью,
@@ -35,7 +37,10 @@ public class Task4_Exam extends PleaseDeleteMeAndImplement{
      * @return
      */
     public static TruckType getTypeByWeight(int weight) {
-        throw new PleaseDeleteMeAndImplement();
+        return Stream.of(TruckType.values())
+                .filter(t -> t.canHandleWeight(weight))
+                .findAny()
+                .orElseThrow(WeightTooHighException::new);
     }
 
     /**
@@ -60,7 +65,19 @@ public class Task4_Exam extends PleaseDeleteMeAndImplement{
      * @return
      */
     public static Map<TruckType, List<Truck>> groupTrucksByType(List<Truck> trucks) {
-        throw new PleaseDeleteMeAndImplement();
+//        return trucks.stream()
+//                .collect(Collectors.groupingBy(t -> t.maxWeightKg, getTypeByWeight(Truck)
+        return trucks.stream()
+                .collect(Collectors.groupingBy(t -> t.maxWeightKg,
+                        Collectors.mapping()));
+
+        return Stream.of(TruckType.values())
+                .collect(Collectors.groupingBy(Truck::new,
+                        Collectors.mapping(getTypeByWeight(1), Collectors.toList())));
+
+        return trucks.stream()
+                .collect(Collectors
+                        .groupingBy(getTypeByWeight()));
     }
 
     /**
@@ -85,7 +102,7 @@ public class Task4_Exam extends PleaseDeleteMeAndImplement{
      * @return
      */
     public static Map<TruckType, Long> countTrucksByType(List<Truck> trucks) {
-        throw new PleaseDeleteMeAndImplement();
+        throw new tasks.PleaseDeleteMeAndImplement();
     }
 
     /**

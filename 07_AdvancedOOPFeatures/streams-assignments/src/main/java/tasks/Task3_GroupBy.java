@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Задания на groupingBy - очень полезная функция в Stream.
@@ -11,7 +12,7 @@ import java.util.Set;
  * Есть список сотрудников Employee с 2-мя строковомы полями (имя + компания где работает сотрудник).
  * Нужно потренироваться группировать сотрудников по компаниям.
  */
-public class Task3_GroupBy extends PleaseDeleteMeAndImplement{
+public class Task3_GroupBy extends tasks.PleaseDeleteMeAndImplement {
 
     /**
      * Сгруппировать сотрудников по компании в Map.
@@ -35,7 +36,8 @@ public class Task3_GroupBy extends PleaseDeleteMeAndImplement{
      * </pre>
      */
     public static Map<String, List<Employee>> groupByCompaniesAsList(Collection<Employee> employees) {
-        throw new PleaseDeleteMeAndImplement();
+        return employees.stream()
+                .collect(Collectors.groupingBy(Employee::getCompany));
     }
 
     /**
@@ -62,7 +64,8 @@ public class Task3_GroupBy extends PleaseDeleteMeAndImplement{
      * </pre>
      */
     public static Map<String, List<Employee>> groupByCompaniesAsListUppercase(Collection<Employee> employees) {
-        throw new PleaseDeleteMeAndImplement();
+        return employees.stream()
+                .collect(Collectors.groupingBy(e -> e.getCompany().toUpperCase()));
     }
 
 
@@ -80,7 +83,8 @@ public class Task3_GroupBy extends PleaseDeleteMeAndImplement{
      * @return
      */
     public static Map<String, Set<Employee>> groupByCompaniesAsSet(Collection<Employee> employees) {
-        throw new PleaseDeleteMeAndImplement();
+        return employees.stream()
+                .collect(Collectors.groupingBy(Employee::getCompany, Collectors.toSet()));
     }
 
     /**
@@ -110,7 +114,10 @@ public class Task3_GroupBy extends PleaseDeleteMeAndImplement{
      * @return
      */
     public static Map<String, List<String>> groupByCompaniesAsString(Collection<Employee> employees) {
-        throw new PleaseDeleteMeAndImplement();
+        return employees.stream()
+                .collect(Collectors
+                        .groupingBy(Employee::getCompany,
+                                Collectors.mapping(Employee::getName, Collectors.toList())));
     }
 
 
