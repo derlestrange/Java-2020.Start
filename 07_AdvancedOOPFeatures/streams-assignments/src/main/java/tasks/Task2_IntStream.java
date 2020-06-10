@@ -28,9 +28,12 @@ public class Task2_IntStream extends PleaseDeleteMeAndImplement {
      * @return
      */
     public static Integer multiply(List<Integer> linkedListOfNumbers) {
+//        return linkedListOfNumbers.stream()
+//                .reduce((s1, s2) -> s1 * s2)
+//                .filter(s -> s <=100 || linkedListOfNumbers.size() == 0).orElse(-1);
         return linkedListOfNumbers.stream()
                 .reduce((s1, s2) -> s1 * s2)
-                .filter(s -> s <=100 || linkedListOfNumbers.size() == 0).orElse(-1);
+                .filter(s -> s <= 100).orElse(-1);
     }
 
     /**

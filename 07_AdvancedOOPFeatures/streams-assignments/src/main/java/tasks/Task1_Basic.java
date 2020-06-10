@@ -38,7 +38,8 @@ class Task1_Basic extends PleaseDeleteMeAndImplement {
      *    - Stream::count()
      */
     static long countLowercaseLetters(String str) {
-        return str.chars().mapToObj(i -> (char)i).filter(Character::isLowerCase).count();
+        //return str.chars().mapToObj(i -> (char)i).filter(Character::isLowerCase).count();
+        return str.chars().filter(Character::isLowerCase).count();
     }
 
 

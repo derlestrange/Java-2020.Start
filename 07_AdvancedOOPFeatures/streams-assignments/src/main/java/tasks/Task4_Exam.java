@@ -1,5 +1,7 @@
 package tasks;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -37,9 +39,13 @@ public class Task4_Exam extends tasks.PleaseDeleteMeAndImplement {
      * @return
      */
     public static TruckType getTypeByWeight(int weight) {
+//        return Stream.of(TruckType.values())
+//                .filter(t -> t.canHandleWeight(weight))
+//                .findAny()
+//                .orElseThrow(WeightTooHighException::new);
         return Stream.of(TruckType.values())
                 .filter(t -> t.canHandleWeight(weight))
-                .findAny()
+                .min(Comparator.comparing(e -> e.maxLoad))
                 .orElseThrow(WeightTooHighException::new);
     }
 
@@ -65,19 +71,16 @@ public class Task4_Exam extends tasks.PleaseDeleteMeAndImplement {
      * @return
      */
     public static Map<TruckType, List<Truck>> groupTrucksByType(List<Truck> trucks) {
-//        return trucks.stream()
-//                .collect(Collectors.groupingBy(t -> t.maxWeightKg, getTypeByWeight(Truck)
-        return trucks.stream()
-                .collect(Collectors.groupingBy(t -> t.maxWeightKg,
-                        Collectors.mapping()));
-
-        return Stream.of(TruckType.values())
-                .collect(Collectors.groupingBy(Truck::new,
-                        Collectors.mapping(getTypeByWeight(1), Collectors.toList())));
-
-        return trucks.stream()
-                .collect(Collectors
-                        .groupingBy(getTypeByWeight()));
+        return trucks.stream().collect(Collectors.groupingBy(t -> {
+            TruckType tr = null;
+            try {
+                tr = getTypeByWeight(t.maxWeightKg);
+            }
+            catch (Throwable thr) {
+                tr = Arrays.stream(TruckType.values()).max(Comparator.comparingInt(e -> e.maxLoad)).get();
+            }
+            return tr;
+        }));
     }
 
     /**
@@ -102,7 +105,9 @@ public class Task4_Exam extends tasks.PleaseDeleteMeAndImplement {
      * @return
      */
     public static Map<TruckType, Long> countTrucksByType(List<Truck> trucks) {
-        throw new tasks.PleaseDeleteMeAndImplement();
+        return trucks.stream()
+                .collect(Collectors.groupingBy(t ->
+                        getTypeByWeight(t.maxWeightKg), Collectors.counting()));
     }
 
     /**
