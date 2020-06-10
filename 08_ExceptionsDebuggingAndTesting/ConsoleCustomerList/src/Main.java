@@ -1,9 +1,6 @@
-import org.apache.commons.validator.routines.EmailValidator;
-
 import java.util.Scanner;
 
-public class Main
-{
+public class Main {
     private static String addCommand = "add Василий Петров " +
             "vasily.petrov@gmail.com +79215637722";
     private static String commandExamples = "\t" + addCommand + "\n" +
@@ -12,13 +9,10 @@ public class Main
             commandExamples;
     private static String helpText = "Command examples:\n" + commandExamples;
 
-    public static void main(String[] args)
-    {
-        EmailValidator e = EmailValidator.getInstance();
+    public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         CustomerStorage executor = new CustomerStorage();
-        for(;;)
-        {
+        for (; ; ) {
             try {
                 String command = scanner.nextLine();
                 String[] tokens = command.split("\\s+", 2);
@@ -35,7 +29,7 @@ public class Main
                 } else {
                     System.out.println(commandError);
                 }
-            } catch (ArrayIndexOutOfBoundsException ex){
+            } catch (ArrayIndexOutOfBoundsException ex) {
                 System.out.println(ex.getMessage());
             }
         }
