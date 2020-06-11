@@ -9,7 +9,7 @@ public class Main {
             commandExamples;
     private static String helpText = "Command examples:\n" + commandExamples;
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         CustomerStorage executor = new CustomerStorage();
         for (; ; ) {
@@ -29,7 +29,7 @@ public class Main {
                 } else {
                     System.out.println(commandError);
                 }
-            } catch (ArrayIndexOutOfBoundsException ex) {
+            } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
         }
