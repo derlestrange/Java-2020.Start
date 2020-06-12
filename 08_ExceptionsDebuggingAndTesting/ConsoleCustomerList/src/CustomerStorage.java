@@ -25,7 +25,7 @@ public class CustomerStorage {
         if (!emailValidator.isValid(components[2])) {
             throw new EmailWrongFormatException("Wrong format email! \nCorrectly format: vasily.petrov@gmail.com");
         }
-        if (components[3].matches("\\+[0-9]{10,11}")) {
+        if (!components[3].matches("\\+[0-9]{10,11}")) {
             throw new PhoneNumberWrongFormatException("Incorrect phone number format! \nCorrectly format: +79215637722");
         }
     }
