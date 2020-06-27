@@ -1,3 +1,4 @@
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
@@ -10,6 +11,12 @@ public class Main {
         try {
             for (; ; ) {
                 String userInput = scanner.nextLine();
+                File file = new File(userInput);
+
+                if(file.isDirectory()){
+                    System.out.println("Enter correctly path!");
+                    continue;
+                }
                 long size = Files.walk(Paths.get(userInput))
                         .filter(p -> p.toFile().isFile())
                         .mapToLong(p -> p.toFile().length())
