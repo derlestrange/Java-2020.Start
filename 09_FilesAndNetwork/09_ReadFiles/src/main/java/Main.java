@@ -1,20 +1,32 @@
-import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         System.out.println("Enter folder path: ");
-        for (; ; ) {
-            Scanner scanner = new Scanner(System.in);
-            String s = scanner.nextLine();
-            Path path = Paths.get(s);
-            long size = Files.walk(path)
-                    .filter(p -> p.toFile().isFile())
-                    .mapToLong(p -> p.toFile().length())
-                    .sum();
+        Scanner scanner = new Scanner(System.in);
+        try {
+            for (; ; ) {
+                String userInput = scanner.nextLine();
+                long size = Files.walk(Paths.get(userInput))
+                        .filter(p -> p.toFile().isFile())
+                        .mapToLong(p -> p.toFile().length())
+                        .sum();
+
+                String[] units = new String[]{"B", "KB", "MB", "GB", "TB"};
+                int unitIndex = (int) (Math.log10(size) / 3);
+                double unitValue = 1 << (unitIndex * 10);
+
+                String readableSize = new DecimalFormat("#,##0.#")
+                        .format(size / unitValue) + " "
+                        + units[unitIndex];
+
+                System.out.println("Folder weight: " + readableSize);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
         }
     }
 }
