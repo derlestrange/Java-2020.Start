@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
@@ -6,10 +7,14 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Enter folder path: ");
+        getSizeFolder();
+    }
+
+    private static void getSizeFolder(){
         Scanner scanner = new Scanner(System.in);
         try {
             for (; ; ) {
+                System.out.println("Enter folder path: ");
                 String userInput = scanner.nextLine();
                 File file = new File(userInput);
 
@@ -32,7 +37,7 @@ public class Main {
 
                 System.out.println("Folder weight: " + readableSize);
             }
-        } catch (Exception e){
+        } catch (IOException e){
             e.printStackTrace();
         }
     }
