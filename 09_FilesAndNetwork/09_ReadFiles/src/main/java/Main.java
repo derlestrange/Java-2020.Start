@@ -1,3 +1,8 @@
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,16 +15,23 @@ public class Main {
         getSizeFolder();
     }
 
-    private static void getSizeFolder(){
+    private static void getSizeFolder() {
+
+        Logger wrongFormatLogger = LogManager.getLogger("WrongFormatLogger");
+        Logger correctFormatLogger = LogManager.getLogger("CorrectFormatLogger");
+
+        final Marker WRONG_FORMAT_LOGGER = MarkerManager.getMarker("WrongFormatPath");
+        final Marker CORRECT_FORMAT_LOGGER = MarkerManager.getMarker("CorrectInput");
+
         Scanner scanner = new Scanner(System.in);
         try {
             for (; ; ) {
-                System.out.println("Enter folder path: ");
+                System.out.println("\nEnter folder path: ");
                 String userInput = scanner.nextLine();
                 File file = new File(userInput);
 
-                if(file.isDirectory()){
-                    System.out.println("Enter correctly path!");
+                if (!file.isDirectory()) {
+                    wrongFormatLogger.info(WRONG_FORMAT_LOGGER, "User input: " + userInput);
                     continue;
                 }
                 long size = Files.walk(Paths.get(userInput))
@@ -36,8 +48,9 @@ public class Main {
                         + units[unitIndex];
 
                 System.out.println("Folder weight: " + readableSize);
+                correctFormatLogger.info(CORRECT_FORMAT_LOGGER, "User input: " + userInput);
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
