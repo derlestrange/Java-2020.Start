@@ -1,11 +1,11 @@
-import org.apache.commons.io.FileUtils;
+//import org.apache.commons.io.FileUtils;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 public class Main {
@@ -43,12 +43,41 @@ public class Main {
                     continue;
                 }
 
-                FileUtils.copyDirectoryToDirectory(fileFrom, fileTo);
+//                FileUtils.copyDirectory(fileFrom, fileTo);
+                copyFolder(fileFrom, fileTo);
                 correctFormatLogger.info(CORRECT_FORMAT_LOGGER,
                         "Folder copying from: " + userInputFrom + " to: " + userInputTo);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void copyFolder(File sourceLocation, File targetLocation) throws IOException {
+        if (sourceLocation.isDirectory()) {
+            if (!targetLocation.exists()) {
+                targetLocation.mkdir();
+            }
+
+            String files[] = sourceLocation.list();
+
+            for (String file : files) {
+                File srcFile = new File(sourceLocation, file);
+                File destFile = new File(targetLocation, file);
+                copyFolder(srcFile, destFile);
+            }
+        } else {
+            InputStream in = new FileInputStream(sourceLocation);
+            OutputStream out = new FileOutputStream(targetLocation);
+
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = in.read(buffer)) > 0) {
+                out.write(buffer, 0, length);
+            }
+
+            in.close();
+            out.close();
         }
     }
 }
