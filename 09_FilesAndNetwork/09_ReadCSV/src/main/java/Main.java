@@ -4,6 +4,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Main {
 
@@ -19,24 +20,29 @@ public class Main {
         for (int i = 1; i < lines.size(); i++) {
             String[] fragments = lines.get(i).split(",", 8);
 
-            String str = fragments[7].replaceAll(",", ".")
+            String spendingDecimeter = fragments[7].replaceAll(",", ".")
                     .replaceAll("\"", "").trim();
-            spending += Double.parseDouble(str);
+            spending += Double.parseDouble(spendingDecimeter);
 
             obtainment += Double.parseDouble(fragments[6]);
 
             String[] transaction = fragments[5].trim().split("\\s{3,}");
             String[] transact = transaction[1].split("/");
             String[] transactSupply = transact[transact.length - 1].split("\\\\");
-            String organization = transactSupply[transactSupply.length - 1];
+            String organization = transactSupply[transactSupply.length - 1].trim();
 
-            staff.add(organization);
+
+            organizationsAndExpenses.put(organization, Double.parseDouble(spendingDecimeter));
         }
 
 
         System.out.println("Общий расход: " + spending);
-        System.out.println("Общий приход: " + obtainment);
-        staff.forEach(System.out::println);
+        System.out.println("Общий приход: " + obtainment +"\n");
+        //staff.forEach(System.out::println);
+        for (String s : organizationsAndExpenses.keySet()){
+            System.out.printf("%-30s %s %s %n", s, organizationsAndExpenses.get(s), "руб.");
+            //System.out.println("Организация: " + s + "\t" + organizationsAndExpenses.get(s) + " руб.");
+        }
 
     }
 }
