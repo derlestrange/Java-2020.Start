@@ -7,17 +7,19 @@ import java.util.List;
 public class Main {
 
     private static String csvFile = "data/movementList.csv";
-    private static HashMap<String, Double> org = new HashMap<>();
+    private static HashMap<String, Double> orgHashMap = new HashMap<>();
 
     public static void main(String[] args) throws IOException {
-
         List<String> lines = Files.readAllLines(Paths.get(csvFile));
+        parseCsv(lines);
+    }
 
+    private static void parseCsv(List<String> csvLines){
         double spending = 0;
         double obtainment = 0;
 
-        for (int i = 1; i < lines.size(); i++) {
-            String[] fragments = lines.get(i).split(",", 8);
+        for (int i = 1; i < csvLines.size(); i++) {
+            String[] fragments = csvLines.get(i).split(",", 8);
 
             String spendingDecimeter = fragments[7].replaceAll(",", ".")
                     .replaceAll("\"", "").trim();
@@ -31,21 +33,22 @@ public class Main {
             String[] transactSupply = transact[transact.length - 1].split("\\\\");
             String organization = transactSupply[transactSupply.length - 1].trim();
 
-            if (!org.containsKey(organization)) {
-                org.put(organization, spend);
+            if (!orgHashMap.containsKey(organization)) {
+                orgHashMap.put(organization, spend);
             } else {
-                double sum = org.get(organization);
+                double sum = orgHashMap.get(organization);
                 sum += spend;
-                org.put(organization, sum);
+                orgHashMap.put(organization, sum);
             }
         }
 
-
         System.out.println("Общий расход: " + spending);
         System.out.println("Общий приход: " + obtainment + "\n");
-        for (String s : org.keySet()) {
-            System.out.printf("%-30s %s %s %n", s, org.get(s), "руб.");
+        System.out.println("Суммы расходов по организациям:");
+        for (String s : orgHashMap.keySet()) {
+            System.out.printf("%-30s %s %s %n", s, orgHashMap.get(s), "руб.");
         }
-
     }
 }
+
+
