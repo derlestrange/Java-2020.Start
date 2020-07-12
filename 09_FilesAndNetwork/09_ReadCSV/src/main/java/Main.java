@@ -1,18 +1,15 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class Main {
 
     private static String csvFile = "data/movementList.csv";
 
     public static void main(String[] args) throws IOException {
-        HashMap<String, Double> organizationsAndExpenses = new HashMap<>();
-        List<String> staff = new ArrayList<>();
+        HashMap<String, Double> org = new HashMap<>();
         List<String> lines = Files.readAllLines(Paths.get(csvFile));
         double spending = 0;
         double obtainment = 0;
@@ -31,17 +28,20 @@ public class Main {
             String[] transactSupply = transact[transact.length - 1].split("\\\\");
             String organization = transactSupply[transactSupply.length - 1].trim();
 
-
-            organizationsAndExpenses.put(organization, Double.parseDouble(spendingDecimeter));
+            if (!org.containsKey(organization)) {
+                org.put(organization, Double.parseDouble(spendingDecimeter));
+            } else {
+                double sum = org.get(organization);
+                sum += Double.parseDouble(spendingDecimeter);
+                org.put(organization, sum);
+            }
         }
 
 
         System.out.println("Общий расход: " + spending);
         System.out.println("Общий приход: " + obtainment +"\n");
-        //staff.forEach(System.out::println);
-        for (String s : organizationsAndExpenses.keySet()){
-            System.out.printf("%-30s %s %s %n", s, organizationsAndExpenses.get(s), "руб.");
-            //System.out.println("Организация: " + s + "\t" + organizationsAndExpenses.get(s) + " руб.");
+        for (String s : org.keySet()){
+            System.out.printf("%-30s %s %s %n", s, org.get(s), "руб.");
         }
 
     }
