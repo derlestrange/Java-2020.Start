@@ -3,6 +3,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Main {
 
@@ -21,7 +22,7 @@ public class Main {
         for (int i = 1; i < csvLines.size(); i++) {
             String[] fragments = csvLines.get(i).split(",", 8);
 
-            String spendingDecimeter = fragments[7].replaceAll(",", ".")
+            String spendingDecimeter = fragments[7].replace(",", ".")
                     .replaceAll("\"", "").trim();
             spending += Double.parseDouble(spendingDecimeter);
             double spend = Double.parseDouble(spendingDecimeter);
@@ -45,8 +46,8 @@ public class Main {
         System.out.println("Общий расход: " + spending);
         System.out.println("Общий приход: " + obtainment + "\n");
         System.out.println("Суммы расходов по организациям:");
-        for (String s : orgHashMap.keySet()) {
-            System.out.printf("%-30s %s %s %n", s, orgHashMap.get(s), "руб.");
+        for (Map.Entry<String, Double> s : orgHashMap.entrySet()) {
+            System.out.printf("%-30s %s %s %n", s.getKey(), s.getValue(), "руб.");
         }
     }
 }
