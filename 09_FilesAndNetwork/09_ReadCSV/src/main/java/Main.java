@@ -58,6 +58,10 @@ public class Main {
             System.out.printf("%-30s %s %s %n", s.getKey(), s.getValue(), "руб.");
         }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 169bcfa38b536e0f4b963492262d0b88765fb096
         System.out.println("\n=======================================\n\nСуммы прихода по организациям:");
         for (Map.Entry<String, Double> s : orgHashMapObtain.entrySet()) {
             System.out.printf("%-30s %s %s %n", s.getKey(), s.getValue(), "руб.");
